@@ -1,2 +1,2 @@
-# mycms
-A smile CMS system written in PHP
+# MyCMA
+A smile CMS system written in PHP. More info coming soon!

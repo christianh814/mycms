@@ -32,7 +32,8 @@
 				<?php 
 					while ($cat_sidebar = mysqli_fetch_assoc($select_sidebar_categories)) {
                                 		$cat_sidebar_title = $cat_sidebar['cat_title'];
-                                		echo "<li><a href='#'>" . $cat_sidebar_title . "</a></li>";
+                                		$cat_sidebar_id = $cat_sidebar['cat_id'];
+                                		echo "<li><a href='category.php?category={$cat_sidebar_id}'>" . $cat_sidebar_title . "</a></li>";
                         		}
 				?>
                             </ul>

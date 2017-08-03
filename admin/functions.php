@@ -1,4 +1,13 @@
 <?php
+
+function confirmQuery($result) {
+	global $connect;
+	if (!$result) {
+		die("QUERY FAILED: " . mysqli_error($connect));
+	}
+}
+//
+
 function insertCategories() {
 	global $connect;
 	if(isset($_POST['submit'])) {
@@ -54,5 +63,6 @@ function editCategories() {
 	}
 
 }
+
 
 ?>

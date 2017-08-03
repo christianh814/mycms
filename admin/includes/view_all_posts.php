@@ -32,7 +32,15 @@
 						echo "<td>{$post_id}</td>";
 						echo "<td>{$post_author}</td>";
 						echo "<td>{$post_title}</td>";
-						echo "<td>{$post_category_id}</td>";
+						// Get the category based on the what we get from the posts table
+						$query = "SELECT * FROM categories WHERE cat_id = {$post_category_id} ";
+						$select_categories_id = mysqli_query($connect, $query);
+							while ($cat = mysqli_fetch_assoc($select_categories_id)) {
+								$cat_id = $cat['cat_id'];
+								$cat_title = $cat['cat_title'];
+								echo "<td>{$cat_title}</td>";
+							}
+						// END dyamic category
 						echo "<td>{$post_status}</td>";
 						echo "<td><img width='100' src='./../{$post_image}' alt='image'></td>";
 						echo "<td>{$post_tags}</td>";

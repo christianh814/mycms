@@ -16,6 +16,7 @@
 		$query = "SELECT * FROM posts";
 		$select_all_posts = mysqli_query($connect, $query);
 		while ($post = mysqli_fetch_assoc($select_all_posts)) {
+			$post_id = $post['post_id'];
 			$post_title = $post['post_title'];
 			$post_author = $post['post_author'];
 			$post_date = $post['post_date'];
@@ -31,7 +32,7 @@
 
                 <!-- First Blog Post -->
                 <h2>
-		<a href="#"><?php echo $post_title ?></a>
+		<a href="post.php?p_id=<?php echo $post_id ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
                     by <a href="index.php"><?php echo $post_author ?></a>

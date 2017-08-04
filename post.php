@@ -18,7 +18,7 @@
 			$post_id = $_GET['p_id'];
 		}
 		
-		$query = "SELECT * FROM posts WHERE post_id = '{$post_id}'";
+		$query = "SELECT * FROM posts WHERE post_id = '{$post_id}' AND post_status = 'published'";
 		$select_all_posts = mysqli_query($connect, $query);
 		while ($post = mysqli_fetch_assoc($select_all_posts)) {
 			$post_title = $post['post_title'];
@@ -26,6 +26,7 @@
 			$post_date = $post['post_date'];
 			$post_image = $post['post_image'];
 			$post_content = $post['post_content'];
+
 		// Breakout of php here for HTML below
 		?>
 
@@ -46,7 +47,7 @@
 		<img class="img-responsive" src=<?php echo $post_image?> alt="">
                 <hr>
                 <p><?php echo $post_content ?></p>
-                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <!-- No "READ MORE" on post page <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a> -->
 
 		<?php } // this closes the `while` loop ?>
 
@@ -67,6 +68,11 @@
 				if (!$create_comment) {
 					die("QUERY FAILED: " . mysqli_error($connect));
 				}
+
+				$query = "UPDATE posts SET post_comment_count = post_comment_count +1 ";
+				$query .= "WHERE post_id = {$post_id}";
+
+				$update_comment_count = mysqli_query($connect, $query);
 	
 			}
 		?>
@@ -95,30 +101,40 @@
 
                <!-- Posted Comments -->
 
+		<?php
+			$query = "SELECT * FROM comments WHERE comment_post_id = {$post_id} ";
+			$query .= "AND comment_status = 'approved' ";
+			$query .= "ORDER BY comment_id DESC";
+
+			$select_comment_query = mysqli_query($connect, $query);
+
+			if (!$select_comment_query) {
+				die("QUERY FAILED: " . mysqli_error($connect));
+			}
+
+			while ($comment = mysqli_fetch_array($select_comment_query)) {
+				$comment_date = $comment['comment_date'];
+				$comment_content = $comment['comment_content'];
+				$comment_author = $comment['comment_author'];
+			?>
                 <!-- Comment -->
                 <div class="media">
                     <a class="pull-left" href="#">
                         <img class="media-object" src="http://placehold.it/64x64" alt="">
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
+                        <h4 class="media-heading"><?php echo $comment_author ?>
+                            <small><?php $comment_date ?></small>
                         </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+			<?php echo $comment_content ?>
                     </div>
                 </div>
 
-                <!-- Comment -->
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
-                        </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                <!-- End Comment -->
+			<?php } ?>
+
                         <!-- Nested Comment -->
+			<!--
                         <div class="media">
                             <a class="pull-left" href="#">
                                 <img class="media-object" src="http://placehold.it/64x64" alt="">
@@ -130,9 +146,8 @@
                                 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
                             </div>
                         </div>
+		    -->
                         <!-- End Nested Comment -->
-                    </div>
-                </div>
 
 
             </div>

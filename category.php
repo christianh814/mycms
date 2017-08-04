@@ -18,7 +18,7 @@
 			$post_category_id = $_GET['category'];
 		}
 		//
-		$query = "SELECT * FROM posts WHERE post_category_id = '{$post_category_id}' ";
+		$query = "SELECT * FROM posts WHERE post_category_id = '{$post_category_id}' AND post_status = 'published'";
 		$select_all_posts = mysqli_query($connect, $query);
 		while ($post = mysqli_fetch_assoc($select_all_posts)) {
 			$post_id = $post['post_id'];
@@ -47,7 +47,7 @@
 		<img class="img-responsive" src=<?php echo $post_image?> alt="">
                 <hr>
                 <p><?php echo $post_content ?></p>
-                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
 		<?php } // this closes the `while` loop ?>
 

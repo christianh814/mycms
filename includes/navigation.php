@@ -21,7 +21,8 @@
 
 			while ($cat = mysqli_fetch_assoc($select_all_categories)) {
 				$cat_title = $cat['cat_title'];
-				echo "<li><a href='#'>" . $cat_title . "</a></li>";
+				$cat_id = $cat['cat_id'];
+				echo "<li><a href='category.php?category={$cat_id}'>" . $cat_title . "</a></li>";
 			}
 		?>
 		  <li><a href="admin">Admin</a></li>

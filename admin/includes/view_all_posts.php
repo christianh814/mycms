@@ -46,7 +46,7 @@
 						echo "<td>{$post_tags}</td>";
 						echo "<td>{$post_comment_count}</td>";
 						echo "<td>{$post_date}</td>";
-						echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a>&nbsp;|&nbsp;<a href='posts.php?delete={$post_id}'>Delete</a></td>";
+						echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}' class='btn btn-warning' role='button'>Edit</a>&nbsp;&nbsp;<a href='posts.php?delete={$post_id}' class='btn btn-danger' role='button'>Delete</a></td>";
 						echo "</tr>";
 					}
 	
@@ -62,6 +62,7 @@
 					$delete_query = mysqli_query($connect, $query);
 
 					confirmQuery($delete_query);
+					header("Location: posts.php");
 
 
 				}

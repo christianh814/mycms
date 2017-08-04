@@ -40,7 +40,7 @@
 						<tr>
 							<th>Id</th>
 							<th>Category Title</th>
-							<th colspan="2"><center>Actions</center></th>
+							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>

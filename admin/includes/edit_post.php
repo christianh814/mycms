@@ -23,12 +23,11 @@
 		$post_title = $_POST['post_title'];
 		$post_category_id = $_POST['post_category'];
 		$post_status = $_POST['post_status'];
-		$post_image = $_FILES['post_image']['name'];
 		$post_image_temp = $_FILES['post_image']['tmp_name'];
 		$post_content = $_POST['post_content'];
 		$post_tags = $_POST['post_tags'];
+		$post_image = $_FILES['post_image']['name'];
 
-		move_uploaded_file($post_image_temp, "../images/{$post_image}");
 
 		if (empty($post_image)) {
 			$query = "SELECT * FROM posts WHERE post_id = '{$the_post_id}'";
@@ -36,6 +35,8 @@
 			while ($image = mysqli_fetch_array($select_image)) {
 				$post_image = $image['post_image'];
 			}
+		} else {
+			move_uploaded_file($post_image_temp, "../images/{$post_image}");
 		}
 
 		$query =  "UPDATE posts SET ";

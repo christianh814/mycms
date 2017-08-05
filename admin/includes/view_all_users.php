@@ -34,7 +34,7 @@
 						echo "<td>{$user_role}</td>";
 						echo "<td>";
 						echo "<center>";
-						echo "<a href='users.php?edit={$user_id}' class='btn btn-warning' role='button'>Edit</a>";
+						echo "<a href='users.php?source=edit_user&e_id={$user_id}' class='btn btn-warning' role='button'>Edit</a>";
 						echo "&nbsp;&nbsp";
 						echo "<a href='users.php?delete={$user_id}' class='btn btn-danger' role='button'>Delete</a>";
 						echo "&nbsp;&nbsp";

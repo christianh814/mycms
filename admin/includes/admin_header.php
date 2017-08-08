@@ -3,6 +3,14 @@
 <?php include "../includes/db.php"; ?>
 <?php include "functions.php"; ?>
 <?php ob_start(); ?>
+<?php session_start(); ?>
+<?php
+	if (isset($_SESSION['usre_role'])) {
+		if ($_SESSION['usre_role'] == "subscriber" ) {
+			header("Location: ../index.php");
+		}
+	}
+?>
 <html lang="en">
 
 <head>

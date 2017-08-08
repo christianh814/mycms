@@ -1,4 +1,5 @@
 <?php include "db.php"; 
+session_start();
 
 if (isset($_POST['login'])) {
 	$username = $_POST['username'];
@@ -25,6 +26,10 @@ if (isset($_POST['login'])) {
 	if (!isset($user_id)) {
 		header("Location: ../index.php");
 	} else {
+		$_SESSION['user_name'] = $user_name;
+		$_SESSION['user_firstname'] = $user_firstname;
+		$_SESSION['user_lastname'] = $user_lastname;
+		$_SESSION['usre_role'] = $user_role;
 		header("Location: ../admin/index.php");
 	}
 }

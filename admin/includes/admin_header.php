@@ -5,10 +5,8 @@
 <?php ob_start(); ?>
 <?php session_start(); ?>
 <?php
-	if (isset($_SESSION['usre_role'])) {
-		if ($_SESSION['usre_role'] == "subscriber" ) {
+	if (!isset($_SESSION['usre_role']) or $_SESSION['usre_role'] !== "admin") {
 			header("Location: ../index.php");
-		}
 	}
 ?>
 <html lang="en">

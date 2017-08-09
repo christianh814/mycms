@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.18, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.19, for Linux (x86_64)
 --
 -- Host: localhost    Database: 
 -- ------------------------------------------------------
--- Server version	5.7.18
+-- Server version	5.7.19
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -126,7 +126,7 @@ CREATE TABLE `users` (
   `usre_role` varchar(255) DEFAULT NULL,
   `rand_salt` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +135,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (3,'marco','123','Marcos','Pappoffssssssssssssssssssssss','mpopoff@m.com','images/antmascot.png','subscriber','');
+INSERT INTO `users` VALUES (3,'marco','123','Marco','Pappoff','mpopoff@m.com','images/antmascot.png','admin',''),(4,'christian','123','Christian','Hernandez','c@4.com','images/none-south-park-a-w-e-s-o-m-o-medium-figure-3.jpg','subscriber','');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -347,30 +347,6 @@ CREATE TABLE `func` (
 LOCK TABLES `func` WRITE;
 /*!40000 ALTER TABLE `func` DISABLE KEYS */;
 /*!40000 ALTER TABLE `func` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `gtid_executed`
---
-
-DROP TABLE IF EXISTS `gtid_executed`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `gtid_executed` (
-  `source_uuid` char(36) NOT NULL COMMENT 'uuid of the source where the transaction was originally executed.',
-  `interval_start` bigint(20) NOT NULL COMMENT 'First number of interval.',
-  `interval_end` bigint(20) NOT NULL COMMENT 'Last number of interval.',
-  PRIMARY KEY (`source_uuid`,`interval_start`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `gtid_executed`
---
-
-LOCK TABLES `gtid_executed` WRITE;
-/*!40000 ALTER TABLE `gtid_executed` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gtid_executed` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -754,10 +730,9 @@ UNLOCK TABLES;
 -- Table structure for table `slave_master_info`
 --
 
-DROP TABLE IF EXISTS `slave_master_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `slave_master_info` (
+CREATE TABLE IF NOT EXISTS `slave_master_info` (
   `Number_of_lines` int(10) unsigned NOT NULL COMMENT 'Number of lines in the file.',
   `Master_log_name` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'The name of the master binary log currently being read from the master.',
   `Master_log_pos` bigint(20) unsigned NOT NULL COMMENT 'The master log position of the last read event.',
@@ -788,22 +763,12 @@ CREATE TABLE `slave_master_info` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `slave_master_info`
---
-
-LOCK TABLES `slave_master_info` WRITE;
-/*!40000 ALTER TABLE `slave_master_info` DISABLE KEYS */;
-/*!40000 ALTER TABLE `slave_master_info` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `slave_relay_log_info`
 --
 
-DROP TABLE IF EXISTS `slave_relay_log_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `slave_relay_log_info` (
+CREATE TABLE IF NOT EXISTS `slave_relay_log_info` (
   `Number_of_lines` int(10) unsigned NOT NULL COMMENT 'Number of lines in the file or rows in the table. Used to version table definitions.',
   `Relay_log_name` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'The name of the current relay log file.',
   `Relay_log_pos` bigint(20) unsigned NOT NULL COMMENT 'The relay log position of the last executed event.',
@@ -816,15 +781,6 @@ CREATE TABLE `slave_relay_log_info` (
   PRIMARY KEY (`Channel_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 STATS_PERSISTENT=0 COMMENT='Relay Log Information';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `slave_relay_log_info`
---
-
-LOCK TABLES `slave_relay_log_info` WRITE;
-/*!40000 ALTER TABLE `slave_relay_log_info` DISABLE KEYS */;
-/*!40000 ALTER TABLE `slave_relay_log_info` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `slave_worker_info`
@@ -1124,4 +1080,4 @@ CREATE TABLE IF NOT EXISTS `slow_log` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-05  8:07:16
+-- Dump completed on 2017-08-09 14:38:01

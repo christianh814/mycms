@@ -47,6 +47,7 @@
 		<img class="img-responsive" src=<?php echo $post_image?> alt="">
                 <hr>
                 <p><?php echo $post_content ?></p>
+		<hr></hr>
                 <!-- No "READ MORE" on post page <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a> -->
 
 		<?php } // this closes the `while` loop ?>

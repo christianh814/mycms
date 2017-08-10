@@ -55,6 +55,8 @@
 
 		confirmQuery($update_post);
 
+		echo "<p>Post Updated: " . "<a href='../post.php?p_id={$the_post_id}'>View Posts</a> | <a href='posts.php'>Edit Posts</a></p>";
+
 	}
 
 ?>

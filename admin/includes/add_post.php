@@ -22,6 +22,9 @@
 
 		confirmQuery($create_post_query);
 
+		$the_post_id = mysqli_insert_id($connect);
+		echo "<p>Post Created: " . "<a href='../post.php?p_id={$the_post_id}'>View Post</a> | <a href='posts.php'>Edit Posts</a></p>";
+
 
 	}
 ?>
@@ -45,20 +48,18 @@
 		?>
 		</select>
 	</div>
-<!--
-	<div class="form-group">
-		<label for="post_category">Post Category Id</label>
-		<input type="text" class="form-control" name="post_category_id">
-	</div>
--->
+
 	<div class="form-group">
 		<label for="title">Post Author</label>
 		<input type="text" class="form-control" name="author">
 	</div>
 
 	<div class="form-group">
-		<label for="post_status">Post Status</label>
-		<input type="text" class="form-control" name="post_status">
+		<select name="post_status" id="">
+			<option value="draft">&mdash; Post Status &mdash;</option>
+			<option value="published">Publish</option>
+			<option value="draft">Draft</option>
+		</select>
 	</div>
 
 	<div class="form-group">

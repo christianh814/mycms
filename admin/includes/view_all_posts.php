@@ -18,6 +18,31 @@
 						$delete_post = mysqli_query($connect, $query);
 						confirmQuery($delete_post);
 					break;
+					case 'clone':
+						$query = "SELECT * FROM posts WHERE post_id = '{$checkBoxValue}' ";
+						$select_post = mysqli_query($connect, $query);
+						confirmQuery($select_post);
+
+						while ($post = mysqli_fetch_array($select_post)) {
+							$post_title = $post['post_title'];
+							$post_id = $post['post_id'];
+							$post_author = $post['post_author'];
+							$post_category_id = $post['post_category_id'];
+							$post_status = $post['post_status'];
+							$post_image = $post['post_image'];
+							$post_tags = $post['post_tags'];
+							$post_comment_count = $post['post_comment_count'];
+							$post_content = $post['post_content'];
+							$post_date = $post['post_date'];
+						}
+						$query = "INSERT INTO posts ";
+						$query .= "(post_title, post_author, post_category_id, post_status, post_image, post_tags, post_comment_count, post_content, post_date)";
+						$query .= "VALUES";
+						$query .= "('{$post_title}', '{$post_author}', '{$post_category_id}', '{$post_status}', '{$post_image}', '{$post_tags}', '{$post_comment_count}', '{$post_content}', now() ) ";
+
+						$clone_query = mysqli_query($connect, $query);
+						confirmQuery($clone_query);
+					break;
 				}
 			}
 		}
@@ -31,6 +56,7 @@
 				<option value="published">Publish</option>
 				<option value="draft">Draft</option>
 				<option value="delete">Delete</option>
+				<option value="clone">Clone</option>
 			</select>
 		    </div>
 		    <div>
@@ -56,7 +82,7 @@
 		      </thead>
 		      <tbody>
 			<?php
-				$query = "SELECT * FROM posts";
+				$query = "SELECT * FROM posts ORDER BY post_id DESC";
 				$select_posts = mysqli_query($connect, $query);
 					while ($post = mysqli_fetch_assoc($select_posts)) {
 						$post_id = $post['post_id'];

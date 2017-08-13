@@ -26,8 +26,8 @@
 		?>
 
                 <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
+                    Featured Post
+                    <small>by <?php echo $post_author ?></small>
                 </h1>
 
                 <!-- First Blog Post -->
@@ -35,7 +35,7 @@
 		<a href="post.php?p_id=<?php echo $post_id ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="index.php"><?php echo $post_author ?></a>
+                    by <a href="author_posts.php?author=<?php echo $post_author ?>&p_id=<?php echo $post_id ?>"><?php echo $post_author ?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date ?></p>
                 <hr>
@@ -43,6 +43,7 @@
                 <hr>
                 <p><?php echo $post_content ?></p>
                 <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+		<hr>
 
 		<?php } // this closes the `while` loop ?>
 

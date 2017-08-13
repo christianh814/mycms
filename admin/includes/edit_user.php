@@ -38,6 +38,17 @@
                 } else {
 			move_uploaded_file($user_image_temp, "../images/{$user_image}");
 		}
+		$query = "SELECT rand_salt FROM users ";
+		$select_randsalt_query = mysqli_query($connect, $query);
+
+		if (!$select_randsalt_query) {
+			die("Error: " . mysqli_error($connect));
+		}
+
+		while ($pw = mysqli_fetch_array($select_randsalt_query)) {
+			$salt = $pw['rand_salt'];
+		}
+		$enc_password = crypt($user_password, $salt);
 
                 $query =  "UPDATE users SET ";
                 $query .= "user_firstname        = '{$user_firstname}', ";
@@ -45,7 +56,7 @@
                 $query .= "usre_role       = '{$user_role}', ";
                 $query .= "user_name       = '{$user_name}', ";
                 $query .= "user_email      = '{$user_email}', ";
-                $query .= "user_password      = '{$user_password}', ";
+                $query .= "user_password      = '{$enc_password}', ";
                 $query .= "user_image        = 'images/{$user_image}' ";
                 $query .= "WHERE user_id     = {$the_user_id} ";
 

@@ -3,10 +3,26 @@ session_start();
 
 if (isset($_POST['login'])) {
 	$username = $_POST['username'];
-	$password = $_POST['password'];
+	$posted_password =$_POST['password'];
 
 	$username = mysqli_real_escape_string($connect, $username);
-	$password = mysqli_real_escape_string($connect, $password);
+	$posted_password = mysqli_real_escape_string($connect, $posted_password);
+
+	//
+        $query = "SELECT rand_salt FROM users ";
+        $select_randsalt_query = mysqli_query($connect, $query);
+
+        if (!$select_randsalt_query) {
+        	die("Error: " . mysqli_error($connect));
+        }
+
+        while ($pw = mysqli_fetch_array($select_randsalt_query)) {
+		$salt = $pw['rand_salt'];
+        }
+
+        $password = crypt($posted_password, $salt);
+	//
+
 
 	$query = "SELECT * FROM users WHERE user_name = '{$username}' AND user_password = '{$password}' ";
 	$select_user = mysqli_query($connect, $query);

@@ -34,6 +34,7 @@
 				}
 			}
 		?>
+		  <li><a href="registration.php">Registration</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

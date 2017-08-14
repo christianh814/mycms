@@ -16,7 +16,13 @@
 
 		if (isset($_GET['p_id'])){
 			$post_id = $_GET['p_id'];
-		}
+
+			$view_query = "UPDATE posts SET post_views_count = post_views_count +1 WHERE post_id = '{$post_id}' ";
+			$send_query = mysqli_query($connect, $view_query);
+			if (!$send_query) {
+				die("QUERY FAILED: " . mysqli_error($connect));
+			}
+
 		
 		$query = "SELECT * FROM posts WHERE post_id = '{$post_id}' AND post_status = 'published'";
 		$select_all_posts = mysqli_query($connect, $query);
@@ -50,7 +56,11 @@
 		<hr></hr>
                 <!-- No "READ MORE" on post page <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a> -->
 
-		<?php } // this closes the `while` loop ?>
+		<?php } 
+		} else {
+			header("Location: index.php");
+		}
+		// this closes the `while` loop ?>
 
 		<?php
 			if (isset($_POST['create_comment'])) {

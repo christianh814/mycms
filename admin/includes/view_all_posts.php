@@ -18,6 +18,11 @@
 						$delete_post = mysqli_query($connect, $query);
 						confirmQuery($delete_post);
 					break;
+					case 'reset_views':
+						$query = "UPDATE posts SET post_views_count = 0 WHERE post_id = '{$checkBoxValue}' ";
+						$update_to_draft = mysqli_query($connect, $query);
+						confirmQuery($update_to_draft);
+					break;
 					case 'clone':
 						$query = "SELECT * FROM posts WHERE post_id = '{$checkBoxValue}' ";
 						$select_post = mysqli_query($connect, $query);
@@ -55,6 +60,7 @@
 				<option value="">Select Options</option>
 				<option value="published">Publish</option>
 				<option value="draft">Draft</option>
+				<option value="reset_views">Reset View Count</option>
 				<option value="delete">Delete</option>
 				<option value="clone">Clone</option>
 			</select>
@@ -76,6 +82,7 @@
 			  <th>Image</th>
 			  <th>Tags</th>
 			  <th>Comments</th>
+			  <th>Views</th>
 			  <th>Date</th>
 			  <th>Action</th>
 			</tr>
@@ -94,6 +101,7 @@
 						$post_tags = $post['post_tags'];
 						$post_comment_count = $post['post_comment_count'];
 						$post_date = $post['post_date'];
+						$post_views_count = $post['post_views_count'];
 						// Put information in the table
 						echo "<tr>";
 						?>
@@ -115,6 +123,7 @@
 						echo "<td><img width='100' src='./../{$post_image}' alt='image'></td>";
 						echo "<td>{$post_tags}</td>";
 						echo "<td>{$post_comment_count}</td>";
+						echo "<td>{$post_views_count}</td>";
 						echo "<td>{$post_date}</td>";
 						echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}' class='btn btn-warning' role='button'>Edit</a>&nbsp;&nbsp;<a onClick=\"javascript: return confirm('Are you sure?');\" href='posts.php?delete={$post_id}' class='btn btn-danger' role='button'>Delete</a></td>";
 						echo "</tr>";

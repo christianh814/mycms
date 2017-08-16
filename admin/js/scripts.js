@@ -29,4 +29,6 @@ function loadUsersOnline() {
 	});
 }
 
-loadUsersOnline();
+setInterval(function(){
+	loadUsersOnline();
+},1000);

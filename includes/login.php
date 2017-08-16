@@ -25,6 +25,7 @@ if (isset($_POST['login'])) {
 
 
 	$query = "SELECT * FROM users WHERE user_name = '{$username}' AND user_password = '{$password}' ";
+	//$query = "SELECT * FROM users WHERE user_name = '{$username}' ";
 	$select_user = mysqli_query($connect, $query);
 
 	if (!$select_user) {

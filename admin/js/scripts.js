@@ -22,3 +22,11 @@ $('#load-screen').delay(300).fadeOut(200, function(){
 })
 
 });
+
+function loadUsersOnline() {
+	$.get("functions.php?onlineusers=result", function (data){
+		$(".usersersonline").text(data);
+	});
+}
+
+loadUsersOnline();

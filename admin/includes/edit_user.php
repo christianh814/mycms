@@ -13,8 +13,9 @@
 			$user_email = $users['user_email'];
 			$user_image = $users['user_image'];
 			$user_role = $users['usre_role'];
-			$rand_salt = $users['rand_salt'];
 			}
+	} else {
+		header("Location: index.php");
 	}
 	if (isset($_POST['edit_user'])){
 		$user_firstname = $_POST['user_firstname'];
@@ -38,17 +39,7 @@
                 } else {
 			move_uploaded_file($user_image_temp, "../images/{$user_image}");
 		}
-		$query = "SELECT rand_salt FROM users ";
-		$select_randsalt_query = mysqli_query($connect, $query);
-
-		if (!$select_randsalt_query) {
-			die("Error: " . mysqli_error($connect));
-		}
-
-		while ($pw = mysqli_fetch_array($select_randsalt_query)) {
-			$salt = $pw['rand_salt'];
-		}
-		$enc_password = crypt($user_password, $salt);
+		$enc_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
 
                 $query =  "UPDATE users SET ";
                 $query .= "user_firstname        = '{$user_firstname}', ";
@@ -63,6 +54,8 @@
                 $update_user = mysqli_query($connect, $query);
 
                 confirmQuery($update_user);
+
+		header("Location: users.php");
 
 
 

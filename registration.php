@@ -11,18 +11,9 @@
 			$user_email = mysqli_real_escape_string($connect, $user_email);
 			$user_password = mysqli_real_escape_string($connect, $user_password);
 
-			$query = "SELECT rand_salt FROM users ";
-			$select_randsalt_query = mysqli_query($connect, $query);
+			$password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
 
-			if (!$select_randsalt_query) {
-				die("Error: " . mysqli_error($connect));
-			}
-
-			while ($pw = mysqli_fetch_array($select_randsalt_query)) {
-				$salt = $pw['rand_salt'];
-			}
-
-			$user_password = crypt($user_password, $salt);
+			$user_password = $password;
 
 
 			$query = "INSERT INTO users (user_name, user_email, user_password, usre_role) ";

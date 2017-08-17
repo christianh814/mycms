@@ -8,24 +8,7 @@ if (isset($_POST['login'])) {
 	$username = mysqli_real_escape_string($connect, $username);
 	$posted_password = mysqli_real_escape_string($connect, $posted_password);
 
-	//
-        $query = "SELECT rand_salt FROM users ";
-        $select_randsalt_query = mysqli_query($connect, $query);
-
-        if (!$select_randsalt_query) {
-        	die("Error: " . mysqli_error($connect));
-        }
-
-        while ($pw = mysqli_fetch_array($select_randsalt_query)) {
-		$salt = $pw['rand_salt'];
-        }
-
-        $password = crypt($posted_password, $salt);
-	//
-
-
-	$query = "SELECT * FROM users WHERE user_name = '{$username}' AND user_password = '{$password}' ";
-	//$query = "SELECT * FROM users WHERE user_name = '{$username}' ";
+	$query = "SELECT * FROM users WHERE user_name = '{$username}' ";
 	$select_user = mysqli_query($connect, $query);
 
 	if (!$select_user) {
@@ -40,7 +23,7 @@ if (isset($_POST['login'])) {
 		$user_role = $user['usre_role'];
 		$user_name = $user['user_name'];
 	}
-	if (!isset($user_id)) {
+	if (!password_verify($posted_password, $user_password)) {
 		header("Location: ../index.php");
 	} else {
 		$_SESSION['user_name'] = $user_name;

@@ -13,8 +13,11 @@
 
 		move_uploaded_file($user_image_temp, "../images/{$user_image}");
 
-		$query = "INSERT INTO users (user_id, user_name, user_password, user_firstname, user_lastname, user_email, user_image, usre_role, rand_salt)";
-		$query .= "VALUES (NULL, '{$user_name}', '{$user_password }', '$user_firstname', '$user_lastname', '$user_email', 'images/{$user_image}', '$usre_role', '')";
+		$password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12) );
+		$user_password = $password;
+
+		$query = "INSERT INTO users (user_id, user_name, user_password, user_firstname, user_lastname, user_email, user_image, usre_role)";
+		$query .= "VALUES (NULL, '{$user_name}', '{$user_password }', '$user_firstname', '$user_lastname', '$user_email', 'images/{$user_image}', '$usre_role')";
 
 		$create_post_query = mysqli_query($connect, $query);
 

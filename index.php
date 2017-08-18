@@ -25,7 +25,11 @@
 		} else {
 			$page_1 = ($page * $per_page) - $per_page;
 		}
-		$post_query_count = "SELECT * FROM posts";
+                if (isset($_SESSION['usre_role']) && $_SESSION['usre_role'] == 'admin') {
+			$post_query_count = "SELECT * FROM posts";
+                } else {
+			$post_query_count = "SELECT * FROM posts WHERE post_status = 'published' ";
+                }
 		$select_all_posts_count = mysqli_query($connect, $post_query_count);
 		$post_count = mysqli_num_rows($select_all_posts_count);
 
@@ -73,6 +77,11 @@
 
 		<?php } // this closes the `while` loop ?>
 
+	    <?php
+	    if ($post_count < 1) {
+	    	echo "<h1 class='text-center'>No Posts Available</h1>";
+	    }
+	    ?>
             </div>
 
 <!-- Blog Sidebar Column -->

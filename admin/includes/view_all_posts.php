@@ -32,7 +32,7 @@
 						while ($post = mysqli_fetch_array($select_post)) {
 							$post_title = $post['post_title'];
 							$post_id = $post['post_id'];
-							$post_author = $post['post_author'];
+							$post_user = $post['post_user'];
 							$post_category_id = $post['post_category_id'];
 							$post_status = $post['post_status'];
 							$post_image = $post['post_image'];
@@ -42,9 +42,9 @@
 							$post_date = $post['post_date'];
 						}
 						$query = "INSERT INTO posts ";
-						$query .= "(post_title, post_author, post_category_id, post_status, post_image, post_tags, post_comment_count, post_content, post_date)";
+						$query .= "(post_title, post_user, post_category_id, post_status, post_image, post_tags, post_comment_count, post_content, post_date)";
 						$query .= "VALUES";
-						$query .= "('{$post_title}', '{$post_author}', '{$post_category_id}', '{$post_status}', '{$post_image}', '{$post_tags}', '{$post_comment_count}', '{$post_content}', now() ) ";
+						$query .= "('{$post_title}', '{$post_user}', '{$post_category_id}', '{$post_status}', '{$post_image}', '{$post_tags}', '{$post_comment_count}', '{$post_content}', now() ) ";
 
 						$clone_query = mysqli_query($connect, $query);
 						confirmQuery($clone_query);
@@ -58,7 +58,7 @@
 
 		    <div id="bulkOptionsContainer" class="col-xs-4">
 		    	<select class="form-control" name="bulk_options" id="">
-				<option value="">Select Options</option>
+				<option value="">&mdash; Bulk Action &mdash;</option>
 				<option value="published">Publish</option>
 				<option value="draft">Draft</option>
 				<option value="reset_views">Reset View Count</option>
@@ -94,7 +94,7 @@
 				$select_posts = mysqli_query($connect, $query);
 					while ($post = mysqli_fetch_assoc($select_posts)) {
 						$post_id = $post['post_id'];
-						$post_author = $post['post_author'];
+						$post_user = $post['post_user'];
 						$post_user = $post['post_user'];
 						$post_title = $post['post_title'];
 						$post_category_id = $post['post_category_id'];

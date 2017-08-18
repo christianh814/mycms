@@ -52,14 +52,18 @@
 			<?php
 				// If we get a "delete" GET 
 				if (isset($_GET['delete'])) {
-					$the_user_id = $_GET['delete'];
+					if (isset($_SESSION['usre_role'])) {
+						if ($_SESSION['usre_role'] == 'admin') {
+							$the_user_id = mysqli_real_escape_string($connect, $_GET['delete']);
 
-					$query = "DELETE FROM users WHERE user_id = {$the_user_id} ";
+							$query = "DELETE FROM users WHERE user_id = {$the_user_id} ";
 
-					$delete_query = mysqli_query($connect, $query);
+							$delete_query = mysqli_query($connect, $query);
 
-					confirmQuery($delete_query);
-					header("Location: users.php");
+							confirmQuery($delete_query);
+							header("Location: users.php");
+						}
+					}
 
 
 				}

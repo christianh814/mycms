@@ -37,6 +37,7 @@
 			$post_id = $post['post_id'];
 			$post_title = $post['post_title'];
 			$post_author = $post['post_author'];
+			$post_user = $post['post_user'];
 			$post_date = $post['post_date'];
 			$post_image = $post['post_image'];
 			$post_content = substr($post['post_content'], 0, 150);
@@ -45,7 +46,14 @@
 
                 <h1 class="page-header">
                     Featured Post
-                    <small>by <?php echo $post_author ?></small>
+                    <small>by&nbsp;
+		    <?php if (isset($post_author)) {
+		    	echo $post_author;
+		    } else {
+		    	echo $post_user;
+		    }
+		    ?>
+		    </small>
                 </h1>
 
                 <!-- First Blog Post -->
@@ -53,7 +61,7 @@
 		<a href="post.php?p_id=<?php echo $post_id ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="author_posts.php?author=<?php echo $post_author ?>&p_id=<?php echo $post_id ?>"><?php echo $post_author ?></a>
+                    by <a href="author_posts.php?author=<?php echo $post_user ?>&p_id=<?php echo $post_id ?>"><?php echo $post_user ?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date ?></p>
                 <hr>

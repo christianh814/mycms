@@ -1,4 +1,5 @@
  	<?php
+	include("delete_modal.php");
 		if (isset($_POST['checkBoxArray'])) {
 			foreach ($_POST['checkBoxArray'] as $checkBoxValue) {
 				$bulk_options = $_POST['bulk_options'];
@@ -75,7 +76,7 @@
 		        <tr>
 			  <th><input type="checkbox" id="selectAllBoxes"></th>
 			  <th>Id</th>
-			  <th>Author</th>
+			  <th>User</th>
 			  <th>Title</th>
 			  <th>Category</th>
 			  <th>Status</th>
@@ -94,6 +95,7 @@
 					while ($post = mysqli_fetch_assoc($select_posts)) {
 						$post_id = $post['post_id'];
 						$post_author = $post['post_author'];
+						$post_user = $post['post_user'];
 						$post_title = $post['post_title'];
 						$post_category_id = $post['post_category_id'];
 						$post_status = $post['post_status'];
@@ -108,7 +110,13 @@
 						<td><input class="checkBoxes" type="checkbox" name="checkBoxArray[]" value='<?php echo $post_id ;?>'></td>
 						<?php
 						echo "<td>{$post_id}</td>";
-						echo "<td>{$post_author}</td>";
+						//
+						if (isset($post_author) || !empty($post_author)) {
+							echo "<td>{$post_author}</td>";
+						} elseif (isset($post_user) || !empty($post_user)) {
+							echo "<td>{$post_user}</td>";
+						}
+						//
 						echo "<td><a href='../post.php?p_id={$post_id}'>{$post_title}</a></td>";
 						// Get the category based on the what we get from the posts table
 						$query = "SELECT * FROM categories WHERE cat_id = {$post_category_id} ";
@@ -132,7 +140,9 @@
 
 						echo "<td>{$post_views_count}</td>";
 						echo "<td>{$post_date}</td>";
-						echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}' class='btn btn-warning' role='button'>Edit</a>&nbsp;&nbsp;<a onClick=\"javascript: return confirm('Are you sure?');\" href='posts.php?delete={$post_id}' class='btn btn-danger' role='button'>Delete</a></td>";
+						//echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}' class='btn btn-warning' role='button'>Edit</a>&nbsp;&nbsp;<a onClick=\"javascript: return confirm('Are you sure?');\" href='posts.php?delete={$post_id}' class='btn btn-danger' role='button'>Delete</a></td>";
+						echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}' class='btn btn-warning' role='button'>Edit</a>&nbsp;&nbsp;";
+						echo "<a rel={$post_id} href='javascript:void(0)' class='btn btn-danger delete_link' role='button'>Delete</a></td>";
 						echo "</tr>";
 					}
 	
@@ -154,3 +164,14 @@
 
 				}
 			?>
+<script>
+	$(document).ready(function(){
+		$(".delete_link").on('click', function(){
+			var id = $(this).attr("rel");
+			var delete_url = "posts.php?delete="+ id +" ";
+			$(".modal_delete_link").attr("href", delete_url);
+
+			$("#myModal").modal('show');
+		});
+	});
+</script>

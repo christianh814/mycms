@@ -1,5 +1,11 @@
 <?php
 
+function escapeText($string) {
+	global $connect;
+	return mysqli_real_escape_string($connect, trim($string));
+}
+
+//
 function confirmQuery($result) {
 	global $connect;
 	if (!$result) {

@@ -95,7 +95,9 @@
                         while ($user = mysqli_fetch_assoc($select_users)) {
                                 $user_id = $user['user_id'];
                                 $user_name = $user['user_name'];
-                                echo "<option value='{$user_name}'>{$user_name}</option>";
+				if ($user_name !== $post_user) {
+                               		echo "<option value='{$user_name}'>{$user_name}</option>";
+				}
                         }
                 ?>
                 </select>

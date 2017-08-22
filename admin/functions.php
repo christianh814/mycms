@@ -74,6 +74,31 @@ function editCategories() {
 }
 //
 
+function recordCount($table) {
+	global $connect;
+	$query = "SELECT * FROM " . $table;
+	$select_all = mysqli_query($connect, $query);
+	return mysqli_num_rows($select_all); 
+
+}
+//
+
+function checkStatus($table, $column, $status) {
+	global $connect;
+	$query = "SELECT * FROM  $table WHERE $column = '$status' ";
+	$result = mysqli_query($connect, $query);
+	return mysqli_num_rows($result); 
+}
+//
+
+function checkUserRole($table, $column, $role) {
+	global $connect;
+	$query = "SELECT * FROM  $table WHERE $column = '$role' ";
+	$result = mysqli_query($connect, $query);
+	return mysqli_num_rows($result); 
+}
+//
+
 function usersOnline() {
 	if (isset($_GET['onlineusers'])) {
 		global $connect;

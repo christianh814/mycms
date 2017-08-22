@@ -90,11 +90,16 @@
 		      </thead>
 		      <tbody>
 			<?php
-				$query = "SELECT * FROM posts ORDER BY post_id DESC";
+				// ORIGINAL ~> $query = "SELECT * FROM posts ORDER BY post_id DESC";
+				/// ONESHOT ~> $query = "SELECT * from posts, categories WHERE post.post_category_id = categories.cat_id ";
+				$query = "SELECT posts.post_id, posts.post_user, posts.post_title, posts.post_category_id, posts.post_status, posts.post_image, ";
+				$query .= "posts.post_tags, posts.post_comment_count, posts.post_date, posts.post_views_count, ";
+				$query .= "categories.cat_id, categories.cat_title ";
+				$query .= "FROM posts ";
+				$query .= "LEFT JOIN categories ON posts.post_category_id = categories.cat_id ORDER BY posts.post_id DESC ";
 				$select_posts = mysqli_query($connect, $query);
 					while ($post = mysqli_fetch_assoc($select_posts)) {
 						$post_id = $post['post_id'];
-						$post_user = $post['post_user'];
 						$post_user = $post['post_user'];
 						$post_title = $post['post_title'];
 						$post_category_id = $post['post_category_id'];
@@ -104,6 +109,8 @@
 						$post_comment_count = $post['post_comment_count'];
 						$post_date = $post['post_date'];
 						$post_views_count = $post['post_views_count'];
+						$cat_title = $post['cat_title'];
+						$cat_id = $post['cat_id'];
 						// Put information in the table
 						echo "<tr>";
 						?>
@@ -118,15 +125,7 @@
 						}
 						//
 						echo "<td><a href='../post.php?p_id={$post_id}'>{$post_title}</a></td>";
-						// Get the category based on the what we get from the posts table
-						$query = "SELECT * FROM categories WHERE cat_id = {$post_category_id} ";
-						$select_categories_id = mysqli_query($connect, $query);
-							while ($cat = mysqli_fetch_assoc($select_categories_id)) {
-								$cat_id = $cat['cat_id'];
-								$cat_title = $cat['cat_title'];
-								echo "<td>{$cat_title}</td>";
-							}
-						// END dyamic category
+						echo "<td>{$cat_title}</td>";
 						echo "<td>{$post_status}</td>";
 						echo "<td><img width='100' src='./../{$post_image}' alt='image'></td>";
 						echo "<td>{$post_tags}</td>";
@@ -138,11 +137,11 @@
 						$comment_id  = $the_comment_id['comment_id'];
 						echo "<td><a href='post_comments.php?id={$post_id}'>{$count_comments}</a></td>";
 
-						echo "<td>{$post_views_count}</td>";
+						echo "<td><span class='badge'>{$post_views_count}</span></td>";
 						echo "<td>{$post_date}</td>";
 						//echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}' class='btn btn-warning' role='button'>Edit</a>&nbsp;&nbsp;<a onClick=\"javascript: return confirm('Are you sure?');\" href='posts.php?delete={$post_id}' class='btn btn-danger' role='button'>Delete</a></td>";
 						echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}' class='btn btn-warning' role='button'>Edit</a>&nbsp;&nbsp;";
-						echo "<a rel={$post_id} href='javascript:void(0)' class='btn btn-danger delete_link' role='button'>Delete</a></td>";
+						 echo "<a rel={$post_id} href='javascript:void(0)' class='btn btn-danger delete_link' role='button'>Delete</a></td>";
 						echo "</tr>";
 					}
 	

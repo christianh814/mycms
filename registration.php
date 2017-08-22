@@ -1,36 +1,44 @@
 <?php  include "includes/db.php"; ?>
 <?php  include "includes/header.php"; ?>
+<?php  include "admin/functions.php"; ?>
 <?php
-	if (isset($_POST['submit'])) {
-		$user_name = $_POST['username'];
-		$user_email = $_POST['email'];
-		$user_password = $_POST['password'];
+	if ($_SERVER['REQUEST_METHOD'] == "POST") {
+		$user_name = trim($_POST['username']);
+		$user_email = trim($_POST['email']);
+		$user_password = trim($_POST['password']);
 
-		if (!empty($user_name) && !empty($user_email) && !empty($user_password) ) {
-			$user_name = mysqli_real_escape_string($connect, $user_name);
-			$user_email = mysqli_real_escape_string($connect, $user_email);
-			$user_password = mysqli_real_escape_string($connect, $user_password);
+		$error = [ 'username' => '', 'email' => '', 'password' => '' ];
 
-			$password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
-
-			$user_password = $password;
-
-
-			$query = "INSERT INTO users (user_name, user_email, user_password, usre_role) ";
-			$query .= "VALUES ('{$user_name}', '{$user_email}','{$user_password}','subscriber') ";
-
-			$register_user = mysqli_query($connect, $query);
-			if (!$register_user) {
-				die("Error: " . mysqli_error($connect));
-			} else {
-				$message = "Request Has Been Submited";
-			}
-			
-		} else {
-			$message = "Fields cannot be empty";
-			
+		if (strlen($user_name) < 4) {
+			$error['username'] = "Username Needs To Be Longer";
+		}
+		if (empty($user_name)) {
+			$error['username'] = "Username cannot be empty";
 		}
 
+		if (strlen($user_email) < 3) {
+			$error['email'] = "Email Needs To Be Longer";
+		}
+		if (empty($user_email)) {
+			$error['email'] = "Email cannot be empty";
+		}
+		if (empty($user_password)) {
+			$error['password'] = "Password cannot be empty";
+		}
+		if (emailExists($user_email)) {
+			$error['email'] = "Email exists, <a href='index.php'>Please Login</a>";
+		}
+
+		foreach ($error as $key => $val) {
+			if (empty($val)) {
+				// If user doesn't already exists, create them and log them in
+				unset($error[$key]);
+			}
+		}
+		if (empty($error)) {
+			registerUser($user_name, $user_email, $user_password);
+			loginUser($user_name, $user_password);
+		}
 	} else {
 		$message = "";
 	}
@@ -51,18 +59,20 @@
                 <div class="form-wrap">
                 <h1>Register</h1>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
-		     <h6 class="text-center"><?php echo $message; ?></h6>
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">
+                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username" autocomplete="on" value="<?php echo isset($user_name) ? $user_name : ''  ?>">
+			    <p><?php echo isset($error['username']) ? $error['username'] : '' ?></p>
                         </div>
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
+                            <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com" autocomplete="on" value="<?php echo isset($user_email) ? $user_email : ''  ?>">
+			    <p><?php echo isset($error['email']) ? $error['email'] : '' ?></p>
                         </div>
                          <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
                             <input type="password" name="password" id="key" class="form-control" placeholder="Password">
+			    <p><?php echo isset($error['password']) ? $error['password'] : '' ?></p>
                         </div>
                 
                         <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">

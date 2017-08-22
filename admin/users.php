@@ -4,6 +4,11 @@
         <!-- Navigation -->
 
 <?php include "includes/admin_navigation.php"?>
+<?php
+	if (!isAdmin($_SESSION['user_name'])) {
+		header("Location: index.php");
+	}
+?>
 
         <div id="page-wrapper">
 

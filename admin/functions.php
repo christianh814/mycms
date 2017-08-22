@@ -99,6 +99,91 @@ function checkUserRole($table, $column, $role) {
 }
 //
 
+function isAdmin($username) {
+	global $connect;
+	$query = "SELECT usre_role FROM users WHERE user_name = '{$username}' ";
+	$result = mysqli_query($connect, $query);
+	$row = mysqli_fetch_array($result);
+	if ($row['usre_role'] == 'admin') {
+		return true;
+	} else {
+		return false;
+	}
+}
+//
+
+function usernameExists($username) {
+	global $connect;
+	$query = "SELECT user_name FROM users WHERE user_name = '{$username}' ";
+	$result = mysqli_query($connect, $query);
+	if (mysqli_num_rows($result) > 0 ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+//
+
+function emailExists($email) {
+	global $connect;
+	$query = "SELECT user_email FROM users WHERE user_email = '{$email}' ";
+	$result = mysqli_query($connect, $query);
+	if (mysqli_num_rows($result) > 0 ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+//
+
+function loginUser($username, $password) {
+	global $connect;
+        $username = trim(mysqli_real_escape_string($connect, $username));
+        $posted_password = trim(mysqli_real_escape_string($connect, $password));
+
+        $query = "SELECT * FROM users WHERE user_name = '{$username}' ";
+        $select_user = mysqli_query($connect, $query);
+
+        if (!$select_user) {
+                die("ERROR: " . mysqli_error($connect));
+        }   
+
+        while ($user = mysqli_fetch_array($select_user)) {
+                $user_id = $user['user_id'];
+                $user_password = $user['user_password'];
+                $user_firstname = $user['user_firstname'];
+                $user_lastname = $user['user_lastname'];
+                $user_role = $user['usre_role'];
+                $user_name = $user['user_name'];
+        }   
+        if (!password_verify($posted_password, $user_password)) {
+		redirectTo('/cms');
+        } else {
+                $_SESSION['user_name'] = $user_name;
+                $_SESSION['user_firstname'] = $user_firstname;
+                $_SESSION['user_lastname'] = $user_lastname;
+                $_SESSION['usre_role'] = $user_role;
+		redirectTo('/cms/admin');
+        }  
+}
+//
+
+function redirectTo($location) {
+	return header("Location: " . $location);
+}
+//
+
+function registerUser($username, $email, $password){
+	global $connect;
+	$password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+	$user_password = $password;
+	$query = "INSERT INTO users (user_name, user_email, user_password, usre_role) ";
+	$query .= "VALUES ('{$username}', '{$email}','{$user_password}','subscriber') ";
+	$register_user = mysqli_query($connect, $query);
+
+}
+//
+
 function usersOnline() {
 	if (isset($_GET['onlineusers'])) {
 		global $connect;

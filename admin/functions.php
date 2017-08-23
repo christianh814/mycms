@@ -21,10 +21,10 @@ function insertCategories() {
 		if ($cat_title == "" || empty($cat_title)) {
 			echo "This field should not be empty!";
 		} else {
-			$query = "INSERT INTO categories (cat_title)";
-			$query .= "VALUE ('{$cat_title}')";
-			$create_category_query = mysqli_query($connect, $query);
-			if (!$create_category_query) {
+			$query = mysqli_prepare($connect,"INSERT INTO categories (cat_title) VALUE (?)");
+			mysqli_stmt_bind_param($query, "s", $cat_title);
+			mysqli_stmt_execute($query);
+			if (!$query) {
 				die('Category Creation FAILED: ' . mysqli_error($connect));
 			}
 		}
@@ -170,6 +170,32 @@ function loginUser($username, $password) {
 
 function redirectTo($location) {
 	return header("Location: " . $location);
+	exit;
+}
+//
+
+function ifMethod($method=null) {
+	if ($_SERVER['REQUEST_METHOD'] == strtoupper($method)){
+		return true;
+	} else {
+		return false;
+	}
+}
+//
+
+function isLoggedin() {
+	if (isset($_SESSION['usre_role'])) {
+		return true;
+	} else {
+		return false;
+	}
+}
+//
+
+function checkIfLoggedInAndRedirect($redirectLocation=null) {
+	if (isLoggedin()) {
+		redirectTo($redirectLocation);
+	}
 }
 //
 

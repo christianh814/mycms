@@ -1,4 +1,3 @@
-
 				<form action="" method="post">
 					<div class="form-group">
 						<label for="cat_title">Update Category</label>
@@ -7,7 +6,6 @@
 							if (isset($_GET['edit'])) {
 								$cat_id = $_GET['edit'];
                         					$query = "SELECT * FROM categories WHERE cat_id = {$cat_id} ";
-
                         					$select_categories_id = mysqli_query($connect, $query);
 								while ($cat = mysqli_fetch_assoc($select_categories_id)) {
                                 				$cat_id = $cat['cat_id'];
@@ -22,11 +20,14 @@
 							if (isset($_POST['update_category'])) {
 								$the_cat_title = $_POST['cat_title'];
 
-                        					$query = "UPDATE categories SET cat_title = '{$the_cat_title}' WHERE cat_id = {$cat_id} ";
-								$update_query = mysqli_query($connect, $query);
-								if (!$update_query){
+                        					//$query = "UPDATE categories SET cat_title = '{$the_cat_title}' WHERE cat_id = {$cat_id} ";
+                        					$query = mysqli_prepare($connect, "UPDATE categories SET cat_title = ? WHERE cat_id = ?");
+								mysqli_stmt_bind_param($query, 'si', $the_cat_title, $cat_id);
+								mysqli_stmt_execute($query);
+								if (!$query){
 									die('UPDATE FAILED: ' . mysqli_error($connect));
 								}
+								redirectTo("categories.php");
 							}
 						?>
 

@@ -1,4 +1,5 @@
 <!-- Header -->
+<?php include "admin/functions.php"; ?>
 <?php include "includes/header.php"; ?>
 
 <!-- Navigation -->
@@ -18,18 +19,37 @@
 			$post_category_id = $_GET['category'];
 		
 		//
-		$query = "SELECT * FROM posts WHERE post_category_id = '{$post_category_id}' AND post_status = 'published'";
-		$select_all_posts = mysqli_query($connect, $query);
-		if (mysqli_num_rows($select_all_posts) < 1) {
+		if (isAdmin($_SESSION['user_name'])) {
+			// $query = "SELECT * FROM posts WHERE post_category_id = '{$post_category_id}' ";
+			$stm1 = mysqli_prepare($connect, "SELECT post_id, post_title, post_user, post_date, post_image, post_content FROM posts WHERE post_category_id = ? ");
+		} else {
+			//$query = "SELECT * FROM posts WHERE post_category_id = '{$post_category_id}' AND post_status = 'published'";
+			$published = 'published';
+			$stm2 = mysqli_prepare($connect, "SELECT post_id, post_title, post_user, post_date, post_image, post_content FROM posts WHERE post_category_id = ? AND post_status = ? ");
+		}
+		//
+		if (isset($stm1)) {
+			mysqli_stmt_bind_param($stm1, "i", $post_category_id);
+			mysqli_stmt_execute($stm1);
+			mysqli_stmt_bind_result($stm1, $post_id, $post_title, $post_user, $post_date, $post_image, $post_content);
+			$stmt = $stm1;
+		} else {
+			mysqli_stmt_bind_param($stm2, "is", $post_category_id, $published);
+			mysqli_stmt_execute($stm2);
+			mysqli_stmt_bind_result($stm2, $post_id, $post_title, $post_user, $post_date, $post_image, $post_content);
+			$stmt = $stm2;
+		}
+		//$select_all_posts = mysqli_query($connect, $query);
+		if (mysqli_stmt_num_rows($stmt) == 0) {
 			echo "<h1 class='text-center'>No Post Available</h1>";
 		}
-		while ($post = mysqli_fetch_assoc($select_all_posts)) {
-			$post_id = $post['post_id'];
-			$post_title = $post['post_title'];
-			$post_user = $post['post_user'];
-			$post_date = $post['post_date'];
-			$post_image = $post['post_image'];
-			$post_content = substr($post['post_content'], 0, 150);
+		while (mysqli_stmt_fetch($stmt)) {
+			//$post_id = $post['post_id'];
+			//$post_title = $post['post_title'];
+			//$post_user = $post['post_user'];
+			//$post_date = $post['post_date'];
+			//$post_image = $post['post_image'];
+			//$post_content = substr($post['post_content'], 0, 150);
 		// Breakout of php here for HTML below
 		?>
 
@@ -54,6 +74,7 @@
 
 		<?php 
 		} // this closes the `while` loop
+			mysqli_stmt_close($stmt);
 		} else {
 			header("Location: index.php");
 		}// closes `if` statement

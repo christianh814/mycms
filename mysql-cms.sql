@@ -34,7 +34,7 @@ CREATE TABLE `categories` (
   `cat_id` int(9) NOT NULL AUTO_INCREMENT,
   `cat_title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`cat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (1,'Bootstrap'),(2,'Javascript'),(3,'JAVA'),(4,'PHP'),(7,'Ruby On Rails'),(8,'Golang');
+INSERT INTO `categories` VALUES (1,'Bootstrap'),(2,'Javascript'),(3,'JAVA'),(4,'PHP'),(7,'Ruby On Rails'),(8,'Golang'),(9,'Python');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +97,7 @@ CREATE TABLE `posts` (
   `post_status` varchar(255) DEFAULT 'draft',
   `post_views_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `users` (
   `usre_role` varchar(255) DEFAULT NULL,
   `rand_salt` varchar(255) NOT NULL DEFAULT '$2y$10$Xm0X4elwJ9p2gDN7Mzej6W',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,7 @@ CREATE TABLE `users_online` (
   `session` varchar(255) DEFAULT NULL,
   `time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,7 +162,7 @@ CREATE TABLE `users_online` (
 
 LOCK TABLES `users_online` WRITE;
 /*!40000 ALTER TABLE `users_online` DISABLE KEYS */;
-INSERT INTO `users_online` VALUES (1,'0qu8lqski54g6k24ph9iiab62m',1502836515),(2,'5u2ev09osbrnku19povd042cff',1502836340),(3,'kcnli597vul18t5cop4uk0druu',1502843676),(4,'kvcirhg4lvolft7npqor8n674d',1502897990),(5,'8c0311tjbjf5b842jrkc71rdnn',1502897488),(6,'d6bklfakolsda4463o1f7jlo4e',1502931610),(7,'a0gp9gmc05c7itpb9tuvn7hbem',1503021942),(8,'29pdthokv0jmgdubp4jvpnf9lb',1503092038),(9,'shpp7nmi62fafves578pg7rhsj',1503381054);
+INSERT INTO `users_online` VALUES (1,'0qu8lqski54g6k24ph9iiab62m',1502836515),(2,'5u2ev09osbrnku19povd042cff',1502836340),(3,'kcnli597vul18t5cop4uk0druu',1502843676),(4,'kvcirhg4lvolft7npqor8n674d',1502897990),(5,'8c0311tjbjf5b842jrkc71rdnn',1502897488),(6,'d6bklfakolsda4463o1f7jlo4e',1502931610),(7,'a0gp9gmc05c7itpb9tuvn7hbem',1503021942),(8,'29pdthokv0jmgdubp4jvpnf9lb',1503092038),(9,'shpp7nmi62fafves578pg7rhsj',1503381054),(10,'8ct3f4ddktpiil9gt1890b4bfg',1503447847);
 /*!40000 ALTER TABLE `users_online` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1107,4 +1107,4 @@ CREATE TABLE IF NOT EXISTS `slow_log` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-21 22:51:35
+-- Dump completed on 2017-08-22 17:38:52

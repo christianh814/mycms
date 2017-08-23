@@ -1,4 +1,5 @@
 <?php include "includes/db.php" ?>
+<?php include "admin/functions.php" ?>
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -16,7 +17,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
 		<?php
-			$query = "SELECT * FROM categories LIMIT 3";
+			$query = "SELECT * FROM categories LIMIT 0";
 			$select_all_categories = mysqli_query($connect, $query);
 
 			while ($cat = mysqli_fetch_assoc($select_all_categories)) {
@@ -51,7 +52,14 @@
 				}
 			}
 		?>
-		  <li><a href="admin">Admin</a></li>
+		  <?php
+		  	if (isLoggedin()) {
+		  		echo "<li><a href='admin'>Admin</a></li>";
+		  		echo "<li><a href='includes/logout.php'>Logout</a></li>";
+			} else {
+		  		echo "<li><a href='login.php'>Login</a></li>";
+			}
+		  ?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

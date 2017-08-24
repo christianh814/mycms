@@ -1,0 +1,13 @@
+{
+    "name": "root/mycms",
+    "require": {
+        "phpmailer/phpmailer": "^5.2",
+	"sendgrid/sendgrid": "~6.0"
+    },
+    "authors": [
+        {
+            "name": "Christian Hernandez",
+            "email": "c_hernand1982@yahoo.com"
+        }
+    ]
+}

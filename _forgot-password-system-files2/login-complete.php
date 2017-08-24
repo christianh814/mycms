@@ -2,24 +2,19 @@
 <?php  include "includes/header.php"; ?>
 
 
-<!-- Navigation -->
-
-<?php  include "includes/navigation.php"; ?>
-
-
 <?php
 
-		checkIfLoggedInAndRedirect('/cms/admin');
+		checkIfUserIsLoggedInAndRedirect('/cms/admin');
 
 
-		if(ifMethod('post')){
+		if(ifItIsMethod('post')){
 
 			if(isset($_POST['username']) && isset($_POST['password'])){
 
-				loginUser($_POST['username'], $_POST['password']);
+				login_user($_POST['username'], $_POST['password']);
 
 
-			} else {
+			}else {
 
 
 				redirect('/cms/login.php');
@@ -34,6 +29,11 @@
 
 ?>
 
+
+
+<!-- Navigation -->
+
+<?php  include "includes/navigation.php"; ?>
 
 
 <!-- Page Content -->

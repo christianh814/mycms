@@ -1,5 +1,4 @@
 <!-- Header -->
-<?php include "admin/functions.php"; ?>
 <?php include "includes/header.php"; ?>
 
 <!-- Navigation -->

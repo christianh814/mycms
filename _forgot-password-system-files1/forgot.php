@@ -1,50 +1,5 @@
 <?php  include "includes/db.php"; ?>
-<!-- Header -->
-<?php include "includes/header.php"; ?>
-
-<!-- Navigation -->
-<?php include "includes/navigation.php"; ?>
-
-<?php
-	$mycmssite = 'http://172.16.1.253/cms';
-	if (!isset($_GET['forgot'])) {
-		redirectTo("/cms/");
-	}
-	if (ifMethod('post')) {
-		if (isset($_POST['email'])) {
-			$email = $_POST['email'];
-			$len = 50;
-			$token = bin2hex(openssl_random_pseudo_bytes($len));
-			if (emailExists($email)) {
-				$stmt = mysqli_prepare($connect, "UPDATE users SET token = '{$token}' WHERE user_email = ?");
-				mysqli_stmt_bind_param($stmt, "s", $email);
-				mysqli_stmt_execute($stmt);
-				mysqli_stmt_close($stmt);
-				$query = "SELECT user_firstname,user_lastname FROM users WHERE user_email = '{$email}' ";
-				$userinfo = mysqli_query($connect, $query);
-				while ($info = mysqli_fetch_assoc($userinfo)) {
-					$to_first = $info['user_firstname'];
-					$to_last  = $info['user_lastname'];
-				}
-				// Send email now
-				$from = "paintball814@gmail.com";
-				$from_fullname = "Christian Hernandez";
-				$subject = "Password Reset";
-				$to = $email;
-				$to_fullname = $to_first . " " .$to_last;
-				$body = "<h1>Password Reset</h1>\n<p>Your password reset link:&nbsp;<a href='{$mycmssite}/reset.php?email={$email}&token={$token}'>RESET</a></p>";
-
-				if (sendEmail($from, $from_fullname, $subject, $to, $to_fullname, $body)) {
-					echo "<center><h1>Password Reset Instructions Emailed!</h1></center>";
-				} else {
-					echo "<center><h1>Error Sending Email: Please try again!</h1></center>";
-				}
-			} else {
-				echo "<center><h1>User Not Found</h1></center>";
-			}
-		}
-	}
-?>
+<?php  include "includes/header.php"; ?>
 
 
 <!-- Page Content -->
@@ -94,9 +49,7 @@
 
     <hr>
 
-    <!-- Footer -->
-<?php include "includes/footer.php"; ?>
-
+    <?php include "includes/footer.php";?>
 
 </div> <!-- /.container -->
 

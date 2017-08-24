@@ -35,6 +35,9 @@
 			 			<button class="btn btn-primary" name="login" type="submit">Login</button>
 					</span>
                     	</div>
+			<div class="form-group">
+				<a href="forgot.php?forgot=<?php echo uniqid(true); ?>">Forgot Password?</a>
+			</div>
 		    	</form>
 
 		    <?php endif;?>

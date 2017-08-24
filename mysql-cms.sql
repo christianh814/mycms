@@ -127,6 +127,7 @@ CREATE TABLE `users` (
   `user_image` text,
   `usre_role` varchar(255) DEFAULT NULL,
   `rand_salt` varchar(255) NOT NULL DEFAULT '$2y$10$Xm0X4elwJ9p2gDN7Mzej6W',
+  `token` text NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -137,7 +138,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (16,'demo','$2y$12$oeCT5s7LUmrUXeY1IVa3d.KAQbsIz07tiKPI7R1z/yV7IFWTs1NrK','Demo','User','demo@demo.com','images/Fedora-logo.svg_.png','subscriber','$2y$10$Xm0X4elwJ9p2gDN7Mzej6W'),(18,'newuser','$2y$12$/XoC8O6PbH3.2xjjYfDC9u7N1u3LRincNB/QB1fYp8FFEGFPeyeZG','Newuser','Hernandez','nu@nu.com','images/Fedora-logo.svg_.png','admin','$2y$10$Xm0X4elwJ9p2gDN7Mzej6W'),(19,'peter','$2y$12$K6hbaAx7mWAw7zE0JYyGveHFTU3EXmEAnIQeUz5Tm/yOjxJjik8wO','Peter','Cottontail','peter@gmail.com','images/Fedora-logo.svg_.png','admin','$2y$10$Xm0X4elwJ9p2gDN7Mzej6W'),(20,'rico','$2y$12$YA0o4AcYJrLJhAU8l.amQue.TAhus.be738zgFejTDRFULfPw3c7W','Rico','Suave','ricosuave@mailinator.com','images/openshift2.jpg','subscriber','$2y$10$Xm0X4elwJ9p2gDN7Mzej6W');
+INSERT INTO `users` VALUES (16,'demo','$2y$12$oeCT5s7LUmrUXeY1IVa3d.KAQbsIz07tiKPI7R1z/yV7IFWTs1NrK','Demo','User','demo@demo.com','images/Fedora-logo.svg_.png','subscriber','$2y$10$Xm0X4elwJ9p2gDN7Mzej6W',''),(18,'newuser','$2y$12$/XoC8O6PbH3.2xjjYfDC9u7N1u3LRincNB/QB1fYp8FFEGFPeyeZG','Newuser','Hernandez','nu@nu.com','images/Fedora-logo.svg_.png','admin','$2y$10$Xm0X4elwJ9p2gDN7Mzej6W',''),(19,'peter','$2y$12$X.QPW34Oa74WA4e7uXlIAe0GJv0dlLzHA7dII3QgCKpzvDBGm/FzK','Peter','Cottontail','peter@mailinator.com','images/fedora-logo-27E96FA10A-seeklogo.com.png','admin','$2y$10$Xm0X4elwJ9p2gDN7Mzej6W','3694b91bf7db0eea4535c45c8677d26fa54c1d4b59dd92302875c2ca2cb82fb19040e172387c0046cc80117a7d41f438048f'),(20,'rico','$2y$12$YA0o4AcYJrLJhAU8l.amQue.TAhus.be738zgFejTDRFULfPw3c7W','Rico','Suave','ricosuave@mailinator.com','images/openshift2.jpg','subscriber','$2y$10$Xm0X4elwJ9p2gDN7Mzej6W','');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,7 +154,7 @@ CREATE TABLE `users_online` (
   `session` varchar(255) DEFAULT NULL,
   `time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,7 +163,7 @@ CREATE TABLE `users_online` (
 
 LOCK TABLES `users_online` WRITE;
 /*!40000 ALTER TABLE `users_online` DISABLE KEYS */;
-INSERT INTO `users_online` VALUES (1,'0qu8lqski54g6k24ph9iiab62m',1502836515),(2,'5u2ev09osbrnku19povd042cff',1502836340),(3,'kcnli597vul18t5cop4uk0druu',1502843676),(4,'kvcirhg4lvolft7npqor8n674d',1502897990),(5,'8c0311tjbjf5b842jrkc71rdnn',1502897488),(6,'d6bklfakolsda4463o1f7jlo4e',1502931610),(7,'a0gp9gmc05c7itpb9tuvn7hbem',1503021942),(8,'29pdthokv0jmgdubp4jvpnf9lb',1503092038),(9,'shpp7nmi62fafves578pg7rhsj',1503381054),(10,'8ct3f4ddktpiil9gt1890b4bfg',1503447847);
+INSERT INTO `users_online` VALUES (1,'0qu8lqski54g6k24ph9iiab62m',1502836515),(2,'5u2ev09osbrnku19povd042cff',1502836340),(3,'kcnli597vul18t5cop4uk0druu',1502843676),(4,'kvcirhg4lvolft7npqor8n674d',1502897990),(5,'8c0311tjbjf5b842jrkc71rdnn',1502897488),(6,'d6bklfakolsda4463o1f7jlo4e',1502931610),(7,'a0gp9gmc05c7itpb9tuvn7hbem',1503021942),(8,'29pdthokv0jmgdubp4jvpnf9lb',1503092038),(9,'shpp7nmi62fafves578pg7rhsj',1503381054),(10,'8ct3f4ddktpiil9gt1890b4bfg',1503450841),(11,'is3iap9i4dlg1vnr2pglu0jsoe',1503531608);
 /*!40000 ALTER TABLE `users_online` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -507,7 +508,7 @@ CREATE TABLE `innodb_index_stats` (
 
 LOCK TABLES `innodb_index_stats` WRITE;
 /*!40000 ALTER TABLE `innodb_index_stats` DISABLE KEYS */;
-INSERT INTO `innodb_index_stats` VALUES ('cms','categories','PRIMARY','2017-08-02 00:12:13','n_diff_pfx01',6,1,'cat_id'),('cms','categories','PRIMARY','2017-08-02 00:12:13','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('cms','categories','PRIMARY','2017-08-02 00:12:13','size',1,NULL,'Number of pages in the index'),('cms','comments','PRIMARY','2017-08-18 19:59:47','n_diff_pfx01',31,1,'comment_id'),('cms','comments','PRIMARY','2017-08-18 19:59:47','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('cms','comments','PRIMARY','2017-08-18 19:59:47','size',1,NULL,'Number of pages in the index'),('cms','posts','PRIMARY','2017-08-18 19:47:13','n_diff_pfx01',12,1,'post_id'),('cms','posts','PRIMARY','2017-08-18 19:47:13','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('cms','posts','PRIMARY','2017-08-18 19:47:13','size',1,NULL,'Number of pages in the index'),('cms','users','PRIMARY','2017-08-22 05:29:08','n_diff_pfx01',4,1,'user_id'),('cms','users','PRIMARY','2017-08-22 05:29:08','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('cms','users','PRIMARY','2017-08-22 05:29:08','size',1,NULL,'Number of pages in the index'),('cms','users_online','PRIMARY','2017-08-16 15:30:30','n_diff_pfx01',5,1,'id'),('cms','users_online','PRIMARY','2017-08-16 15:30:30','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('cms','users_online','PRIMARY','2017-08-16 15:30:30','size',1,NULL,'Number of pages in the index'),('loginapp','users','PRIMARY','2017-07-26 18:49:24','n_diff_pfx01',8,1,'id'),('loginapp','users','PRIMARY','2017-07-26 18:49:24','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('loginapp','users','PRIMARY','2017-07-26 18:49:24','size',1,NULL,'Number of pages in the index'),('mysql','gtid_executed','PRIMARY','2017-06-09 17:13:14','n_diff_pfx01',0,1,'source_uuid'),('mysql','gtid_executed','PRIMARY','2017-06-09 17:13:14','n_diff_pfx02',0,1,'source_uuid,interval_start'),('mysql','gtid_executed','PRIMARY','2017-06-09 17:13:14','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','gtid_executed','PRIMARY','2017-06-09 17:13:14','size',1,NULL,'Number of pages in the index'),('sys','sys_config','PRIMARY','2017-06-09 17:13:15','n_diff_pfx01',2,1,'variable'),('sys','sys_config','PRIMARY','2017-06-09 17:13:15','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('sys','sys_config','PRIMARY','2017-06-09 17:13:15','size',1,NULL,'Number of pages in the index');
+INSERT INTO `innodb_index_stats` VALUES ('cms','categories','PRIMARY','2017-08-02 00:12:13','n_diff_pfx01',6,1,'cat_id'),('cms','categories','PRIMARY','2017-08-02 00:12:13','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('cms','categories','PRIMARY','2017-08-02 00:12:13','size',1,NULL,'Number of pages in the index'),('cms','comments','PRIMARY','2017-08-18 19:59:47','n_diff_pfx01',31,1,'comment_id'),('cms','comments','PRIMARY','2017-08-18 19:59:47','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('cms','comments','PRIMARY','2017-08-18 19:59:47','size',1,NULL,'Number of pages in the index'),('cms','posts','PRIMARY','2017-08-18 19:47:13','n_diff_pfx01',12,1,'post_id'),('cms','posts','PRIMARY','2017-08-18 19:47:13','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('cms','posts','PRIMARY','2017-08-18 19:47:13','size',1,NULL,'Number of pages in the index'),('cms','users','PRIMARY','2017-08-23 23:43:33','n_diff_pfx01',4,1,'user_id'),('cms','users','PRIMARY','2017-08-23 23:43:33','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('cms','users','PRIMARY','2017-08-23 23:43:33','size',1,NULL,'Number of pages in the index'),('cms','users_online','PRIMARY','2017-08-16 15:30:30','n_diff_pfx01',5,1,'id'),('cms','users_online','PRIMARY','2017-08-16 15:30:30','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('cms','users_online','PRIMARY','2017-08-16 15:30:30','size',1,NULL,'Number of pages in the index'),('loginapp','users','PRIMARY','2017-07-26 18:49:24','n_diff_pfx01',8,1,'id'),('loginapp','users','PRIMARY','2017-07-26 18:49:24','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('loginapp','users','PRIMARY','2017-07-26 18:49:24','size',1,NULL,'Number of pages in the index'),('mysql','gtid_executed','PRIMARY','2017-06-09 17:13:14','n_diff_pfx01',0,1,'source_uuid'),('mysql','gtid_executed','PRIMARY','2017-06-09 17:13:14','n_diff_pfx02',0,1,'source_uuid,interval_start'),('mysql','gtid_executed','PRIMARY','2017-06-09 17:13:14','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','gtid_executed','PRIMARY','2017-06-09 17:13:14','size',1,NULL,'Number of pages in the index'),('sys','sys_config','PRIMARY','2017-06-09 17:13:15','n_diff_pfx01',2,1,'variable'),('sys','sys_config','PRIMARY','2017-06-09 17:13:15','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('sys','sys_config','PRIMARY','2017-06-09 17:13:15','size',1,NULL,'Number of pages in the index');
 /*!40000 ALTER TABLE `innodb_index_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -535,7 +536,7 @@ CREATE TABLE `innodb_table_stats` (
 
 LOCK TABLES `innodb_table_stats` WRITE;
 /*!40000 ALTER TABLE `innodb_table_stats` DISABLE KEYS */;
-INSERT INTO `innodb_table_stats` VALUES ('cms','categories','2017-08-02 00:12:13',6,1,0),('cms','comments','2017-08-18 19:59:47',31,1,0),('cms','posts','2017-08-18 19:47:13',12,1,0),('cms','users','2017-08-22 05:29:08',4,1,0),('cms','users_online','2017-08-16 15:30:30',5,1,0),('loginapp','users','2017-07-26 18:49:24',8,1,0),('mysql','gtid_executed','2017-06-09 17:13:14',0,1,0),('sys','sys_config','2017-06-09 17:13:15',2,1,0);
+INSERT INTO `innodb_table_stats` VALUES ('cms','categories','2017-08-02 00:12:13',6,1,0),('cms','comments','2017-08-18 19:59:47',31,1,0),('cms','posts','2017-08-18 19:47:13',12,1,0),('cms','users','2017-08-23 23:43:33',4,1,0),('cms','users_online','2017-08-16 15:30:30',5,1,0),('loginapp','users','2017-07-26 18:49:24',8,1,0),('mysql','gtid_executed','2017-06-09 17:13:14',0,1,0),('sys','sys_config','2017-06-09 17:13:15',2,1,0);
 /*!40000 ALTER TABLE `innodb_table_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1107,4 +1108,4 @@ CREATE TABLE IF NOT EXISTS `slow_log` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-22 17:38:52
+-- Dump completed on 2017-08-23 16:51:31

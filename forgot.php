@@ -27,7 +27,7 @@
 					$to_last  = $info['user_lastname'];
 				}
 				// Send email now
-				$from = "paintball814@gmail.com";
+				$from = "chx@mailinator.com";
 				$from_fullname = "Christian Hernandez";
 				$subject = "Password Reset";
 				$to = $email;
